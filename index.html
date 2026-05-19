@@ -3,15 +3,647 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NTS Bike Run</title>
+  <title>NTS Bike Run | Oficina de Bicicletas</title>
+  <meta
+    name="description"
+    content="Oficina de bicicletas em Curitiba com atendimento com hora marcada. Revisões, freios, câmbios, montagem, upgrades e manutenção preventiva."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --bg: #050608;
+      --bg-panel: rgba(8, 10, 14, 0.78);
+      --bg-card: rgba(14, 18, 24, 0.85);
+      --text: #f4f7fb;
+      --muted: #c3cad4;
+      --line: rgba(255, 255, 255, 0.12);
+      --blue: #0f67d8;
+      --blue-soft: #2c8cff;
+      --silver: #d6dbe1;
+      --whats: #25d366;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Rajdhani", sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(4, 6, 10, 0.5), rgba(4, 6, 10, 0.92)),
+        radial-gradient(circle at top left, rgba(15, 103, 216, 0.16), transparent 28%),
+        url("img/fundo.webp") center top / cover no-repeat,
+        var(--bg);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(15, 103, 216, 0.05), transparent 32%),
+        linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(280px, 420px) minmax(320px, 1fr);
+      gap: 40px;
+      align-items: center;
+      padding: 40px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
+        var(--bg-panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      inset: 18px;
+      border: 1px solid rgba(15, 103, 216, 0.22);
+      border-radius: 24px;
+    }
+
+    .hero::after {
+      top: 0;
+      right: 0;
+      width: 42%;
+      height: 100%;
+      background:
+        linear-gradient(90deg, transparent, rgba(15, 103, 216, 0.06)),
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: auto, 22px 22px, 22px 22px;
+      opacity: 0.38;
+      mask-image: linear-gradient(90deg, transparent, black 24%);
+    }
+
+    .hero-brand {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+    }
+
+    .hero-brand::before {
+      content: "";
+      position: absolute;
+      width: min(100%, 430px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15, 103, 216, 0.22), transparent 62%);
+      filter: blur(18px);
+    }
+
+    .hero-brand img {
+      position: relative;
+      width: min(100%, 380px);
+      height: auto;
+      filter: drop-shadow(0 24px 28px rgba(0, 0, 0, 0.55));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--blue-soft);
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 56px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue-soft), transparent);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .hero h1,
+    .section-title {
+      font-family: "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      line-height: 0.95;
+      letter-spacing: 0.03em;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.2rem, 8vw, 5.8rem);
+      font-weight: 800;
+      text-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero .subtitle {
+      margin-top: 8px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--blue-soft);
+    }
+
+    .hero .intro {
+      max-width: 640px;
+      margin-top: 22px;
+      font-size: 1.4rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .hero .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--silver);
+      font-size: 1.02rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 28px;
+      padding: 18px 20px;
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.14), rgba(255, 255, 255, 0.04));
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .contact-card img {
+      width: 62px;
+      height: auto;
+      flex: 0 0 auto;
+    }
+
+    .contact-label {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .contact-number {
+      display: inline-block;
+      margin-top: 2px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.7rem);
+      font-weight: 800;
+      line-height: 0.95;
+      text-decoration: none;
+    }
+
+    .contact-note {
+      margin-top: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #d7ffe5;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 14px 26px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: #041008;
+      background: linear-gradient(135deg, #49ec8c, var(--whats));
+      box-shadow: 0 14px 30px rgba(37, 211, 102, 0.32);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .section {
+      margin-top: 28px;
+      padding: 34px 32px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(8, 10, 14, 0.82);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-heading {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 700;
+    }
+
+    .section-kicker {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue-soft);
+    }
+
+    .section-copy {
+      max-width: 720px;
+      font-size: 1.18rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .service-item {
+      position: relative;
+      padding: 18px 20px 18px 58px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(15, 103, 216, 0.08), rgba(255, 255, 255, 0.02)),
+        var(--bg-card);
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: var(--silver);
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+    }
+
+    .service-item::before {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--blue-soft);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: inset 0 0 0 3px rgba(15, 103, 216, 0.12);
+    }
+
+    .service-item::after {
+      content: "";
+      position: absolute;
+      left: 27px;
+      top: 50%;
+      width: 7px;
+      height: 12px;
+      border-right: 2px solid var(--blue-soft);
+      border-bottom: 2px solid var(--blue-soft);
+      transform: translateY(-60%) rotate(45deg);
+    }
+
+    .values {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .value-card {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      min-height: 200px;
+      padding: 22px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+        var(--bg-card);
+      text-align: center;
+    }
+
+    .value-card img {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto;
+      object-fit: contain;
+    }
+
+    .value-card h3 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .value-card p {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 24px;
+      padding: 18px 20px;
+      border-top: 3px solid var(--blue);
+      border-radius: 14px 14px 0 0;
+      background: rgba(4, 6, 10, 0.86);
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .footer strong {
+      color: var(--text);
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 30px 24px;
+      }
+
+      .hero-brand {
+        order: -1;
+      }
+
+      .hero-brand img {
+        width: min(82vw, 320px);
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      .values {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 12px;
+      }
+
+      .hero,
+      .section {
+        padding: 24px 18px;
+        border-radius: 22px;
+      }
+
+      .hero::before {
+        inset: 12px;
+        border-radius: 18px;
+      }
+
+      .hero .intro,
+      .section-copy,
+      .service-item,
+      .value-card p {
+        font-size: 1.05rem;
+      }
+
+      .contact-card {
+        width: 100%;
+        align-items: flex-start;
+        padding: 16px;
+      }
+
+      .contact-card img {
+        width: 48px;
+      }
+
+      .contact-number {
+        font-size: 2.4rem;
+      }
+
+      .hero-actions,
+      .btn {
+        width: 100%;
+      }
+
+      .values {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        padding: 16px;
+      }
+    }
+  </style>
 </head>
-<body style="margin:0;font-family:Arial;background:#111;color:white;text-align:center;padding:60px 20px;">
-  <h1>NTS Bike Run</h1>
-  <h2>Oficina de Bicicletas | Atendimento com Hora Marcada</h2>
-  <p>Revisões, manutenção, montagem, ajustes e venda de peças sob encomenda.</p>
-  <p>Atendimento em Curitiba.</p>
-  <a href="https://wa.me/5541999483807" style="display:inline-block;margin-top:25px;background:#25D366;color:white;padding:15px 25px;border-radius:8px;text-decoration:none;font-weight:bold;">
-    Chamar no WhatsApp
-  </a>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-brand">
+        <img src="img/logo.webp" alt="Logo da NTS Bike Run">
+      </div>
+
+      <div class="hero-content">
+        <span class="eyebrow">Curitiba e região</span>
+        <h1>Oficina de Bicicletas</h1>
+        <p class="subtitle">Atendimento com hora marcada</p>
+        <p class="intro">
+          Revisões, ajustes finos, montagem, upgrades e manutenção preventiva com atendimento
+          direto pelo WhatsApp. Um serviço prático, técnico e pensado para quem quer a bike
+          pronta para rodar com confiança.
+        </p>
+
+        <div class="meta">
+          <span class="pill">Atendimento somente pelo WhatsApp</span>
+          <span class="pill">Peças sob encomenda</span>
+          <span class="pill">Serviço com agendamento</span>
+        </div>
+
+        <div class="contact-card">
+          <img src="img/whats.webp" alt="Ícone do WhatsApp">
+          <div>
+            <div class="contact-label">Contato principal</div>
+            <a class="contact-number" href="https://wa.me/5541999483807" target="_blank" rel="noopener noreferrer">
+              41 9 9948.3807
+            </a>
+            <div class="contact-note">Fale direto para agendar seu atendimento</div>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://wa.me/5541999483807" target="_blank" rel="noopener noreferrer">
+            Chamar no WhatsApp
+          </a>
+          <a class="btn btn-secondary" href="#servicos">
+            Ver serviços
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicos">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">Serviços da oficina</div>
+          <h2 class="section-title">Tudo o que sua bike precisa para rodar melhor</h2>
+        </div>
+        <p class="section-copy">
+          A proposta aqui é unir atendimento próximo, revisão criteriosa e uma estética de oficina
+          especializada, seguindo a identidade forte da marca NTS Bike Run.
+        </p>
+      </div>
+
+      <div class="services">
+        <article class="service-item">Revisão geral</article>
+        <article class="service-item">Freios e câmbios</article>
+        <article class="service-item">Montagem e alinhamento de rodas</article>
+        <article class="service-item">Troca de peças e upgrades</article>
+        <article class="service-item">Manutenção preventiva</article>
+        <article class="service-item">Bikes em geral</article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">Diferenciais da marca</div>
+          <h2 class="section-title">Uma oficina com identidade, confiança e movimento</h2>
+        </div>
+      </div>
+
+      <div class="values">
+        <article class="value-card">
+          <img src="img/icon_ferramentas.webp" alt="">
+          <h3>Ferramentas adequadas</h3>
+          <p>Serviço executado com cuidado técnico e recursos certos para cada ajuste.</p>
+        </article>
+
+        <article class="value-card">
+          <img src="img/icon_confianca.webp" alt="">
+          <h3>Confiança</h3>
+          <p>Atendimento transparente para o cliente entender o que a bike realmente precisa.</p>
+        </article>
+
+        <article class="value-card">
+          <img src="img/icon_atendimento.webp" alt="">
+          <h3>Hora marcada</h3>
+          <p>Organização e praticidade para você agendar sem fila e sem perda de tempo.</p>
+        </article>
+
+        <article class="value-card">
+          <img src="img/icon_paixao.webp" alt="">
+          <h3>Paixão por bikes</h3>
+          <p>Uma identidade visual e um atendimento feitos para quem realmente vive o ciclismo.</p>
+        </article>
+
+        <article class="value-card">
+          <img src="img/icon_movimento.webp" alt="">
+          <h3>Movimento</h3>
+          <p>O foco final é simples: colocar sua bike pronta para voltar à rua com segurança.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span><strong>NTS Bike Run</strong> • Oficina de bicicletas em Curitiba</span>
+      <span>Atendimento somente pelo WhatsApp • <a href="https://wa.me/5541999483807" target="_blank" rel="noopener noreferrer">41 9 9948.3807</a></span>
+    </footer>
+  </main>
 </body>
 </html>
