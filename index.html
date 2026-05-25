@@ -521,6 +521,159 @@
       margin-top: 24px;
     }
 
+    .service-packages {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .package-card {
+      display: grid;
+      gap: 16px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(15, 103, 216, 0.1), rgba(255, 255, 255, 0.02)),
+        var(--bg-card);
+    }
+
+    .package-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px 18px;
+    }
+
+    .package-card h3 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .package-price {
+      color: var(--blue-soft);
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .package-card p {
+      color: var(--muted);
+      font-size: 1.04rem;
+      line-height: 1.5;
+    }
+
+    .package-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .mini-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--silver);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .package-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--silver);
+      display: grid;
+      gap: 8px;
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .service-table-wrap {
+      margin-top: 28px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+        var(--bg-card);
+      overflow: auto;
+    }
+
+    .service-table-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .service-table-header h3 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .service-table-note {
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
+    .price-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 320px;
+    }
+
+    .price-table th,
+    .price-table td {
+      padding: 14px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+    }
+
+    .price-table th {
+      color: var(--blue-soft);
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .price-table td {
+      color: var(--silver);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .price-table td:last-child,
+    .price-table th:last-child {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .services-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
     .value-card {
       display: grid;
       gap: 14px;
@@ -594,6 +747,10 @@
         grid-template-columns: 1fr;
       }
 
+      .service-packages {
+        grid-template-columns: 1fr;
+      }
+
       .values {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -640,6 +797,10 @@
       .hero-actions,
       .btn {
         width: 100%;
+      }
+
+      .service-table-wrap {
+        padding: 18px 14px;
       }
 
       .values {
@@ -714,13 +875,135 @@
         </p>
       </div>
 
-      <div class="services">
-        <article class="service-item">Revisão geral</article>
-        <article class="service-item">Freios e câmbios</article>
-        <article class="service-item">Montagem e alinhamento de rodas</article>
-        <article class="service-item">Troca de peças e upgrades</article>
-        <article class="service-item">Manutenção preventiva</article>
-        <article class="service-item">Bikes em geral</article>
+      <div class="service-packages">
+        <article class="package-card">
+          <div class="package-top">
+            <div>
+              <h3>Revisão Básica</h3>
+              <p>Indicada para manutenção preventiva simples e ajustes de rotina.</p>
+            </div>
+            <div class="package-price">R$ 90</div>
+          </div>
+          <div class="package-meta">
+            <span class="mini-pill">Atendimento com agendamento</span>
+            <span class="mini-pill">Ajustes essenciais</span>
+          </div>
+          <ul class="package-list">
+            <li>Regulagem de câmbios e freios</li>
+            <li>Aperto geral e lubrificação básica da transmissão</li>
+            <li>Calibragem dos pneus e inspeção geral de segurança</li>
+            <li>Verificação de desgaste de corrente, pneus e pastilhas</li>
+          </ul>
+        </article>
+
+        <article class="package-card">
+          <div class="package-top">
+            <div>
+              <h3>Revisão Delivery</h3>
+              <p>Pacote voltado para bikes de uso diário intenso e entregas.</p>
+            </div>
+            <div class="package-price">R$ 140</div>
+          </div>
+          <div class="package-meta">
+            <span class="mini-pill">Atendimento com agendamento</span>
+            <span class="mini-pill">Confiabilidade diária</span>
+          </div>
+          <ul class="package-list">
+            <li>Revisão de freios e transmissão</li>
+            <li>Regulagem de câmbios e reaperto geral</li>
+            <li>Alinhamento rápido e lubrificação básica</li>
+            <li>Verificação de folgas críticas para uso intenso</li>
+          </ul>
+        </article>
+
+        <article class="package-card">
+          <div class="package-top">
+            <div>
+              <h3>Revisão Geral</h3>
+              <p>Para bicicletas com uso frequente ou maior tempo sem manutenção.</p>
+            </div>
+            <div class="package-price">R$ 180</div>
+          </div>
+          <div class="package-meta">
+            <span class="mini-pill">Atendimento com agendamento</span>
+            <span class="mini-pill">Mais completa</span>
+          </div>
+          <ul class="package-list">
+            <li>Inclui tudo da revisão básica</li>
+            <li>Limpeza mais detalhada da transmissão</li>
+            <li>Ajuste fino de câmbios e freios</li>
+            <li>Verificação de folgas, alinhamento de rodas e lubrificação completa</li>
+          </ul>
+        </article>
+
+        <article class="package-card">
+          <div class="package-top">
+            <div>
+              <h3>Revisão Completa / Premium</h3>
+              <p>Serviço mais profundo para uso intenso, trilha ou manutenção avançada.</p>
+            </div>
+            <div class="package-price">R$ 280</div>
+          </div>
+          <div class="package-meta">
+            <span class="mini-pill">Atendimento com agendamento</span>
+            <span class="mini-pill">Preventiva avançada</span>
+          </div>
+          <ul class="package-list">
+            <li>Inclui tudo da revisão geral</li>
+            <li>Desmontagem parcial e limpeza técnica detalhada</li>
+            <li>Revisão de cubos, caixa de direção e movimento central</li>
+            <li>Inspeção avançada com reaperto técnico geral</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="service-table-wrap">
+        <div class="service-table-header">
+          <div>
+            <div class="section-kicker">Serviços avulsos</div>
+            <h3>Tabela Oficial</h3>
+          </div>
+          <p class="service-table-note">
+            Valores de mão de obra. Peças cobradas separadamente, serviços adicionais mediante avaliação e entrega conforme combinado no agendamento.
+          </p>
+        </div>
+
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>Serviço</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Regulagem de câmbio</td><td>R$ 35</td></tr>
+            <tr><td>Regulagem de freio mecânico</td><td>R$ 35</td></tr>
+            <tr><td>Regulagem de freio hidráulico</td><td>R$ 45</td></tr>
+            <tr><td>Sangria de freio hidráulico</td><td>R$ 80 por lado</td></tr>
+            <tr><td>Troca de corrente</td><td>R$ 25</td></tr>
+            <tr><td>Troca de cassete ou catraca</td><td>R$ 35</td></tr>
+            <tr><td>Troca de cabo e conduíte</td><td>R$ 35</td></tr>
+            <tr><td>Troca de movimento central</td><td>R$ 50</td></tr>
+            <tr><td>Troca de caixa de direção</td><td>R$ 50</td></tr>
+            <tr><td>Troca de pneu ou câmara</td><td>R$ 20</td></tr>
+            <tr><td>Conversão tubeless</td><td>R$ 80 por roda</td></tr>
+            <tr><td>Alinhamento de roda</td><td>R$ 35</td></tr>
+            <tr><td>Centramento de roda</td><td>R$ 45</td></tr>
+            <tr><td>Montagem de roda</td><td>R$ 90</td></tr>
+            <tr><td>Montagem de bike nova</td><td>R$ 120</td></tr>
+            <tr><td>Instalação de acessórios</td><td>A partir de R$ 20</td></tr>
+            <tr><td>Diagnóstico e avaliação</td><td>R$ 20</td></tr>
+          </tbody>
+        </table>
+
+        <div class="services-cta">
+          <a class="btn btn-primary" href="https://wa.me/5541999483807" target="_blank" rel="noopener noreferrer">
+            Pedir orçamento no WhatsApp
+          </a>
+          <a class="btn btn-secondary" href="https://wa.me/5541999483807?text=Ol%C3%A1%2C%20quero%20ver%20mais%20servi%C3%A7os%20da%20NTS%20Bike%20Run." target="_blank" rel="noopener noreferrer">
+            Consultar outros serviços
+          </a>
+        </div>
       </div>
     </section>
 
