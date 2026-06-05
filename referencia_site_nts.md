@@ -196,3 +196,10 @@ Quando houver mais anúncios:
 - manter um cadastro por bike
 - guardar nome, fotos, especificações e mensagem de WhatsApp em uma estrutura única
 - repetir o mesmo layout no site para todas as bikes
+
+## Regra de ordenação dos anúncios
+
+- Anúncios com destaque devem ficar fixos no topo
+- Os demais anúncios devem aparecer em ordem aleatória a cada abertura da página
+- Para controlar isso no cadastro, cada bike pode ter um marcador de destaque
+- Se a bike estiver marcada como destaque, ela não entra na rotação aleatória
