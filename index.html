@@ -520,6 +520,7 @@
     .product-gallery {
       display: grid;
       gap: 14px;
+      align-content: start;
     }
 
     .product-hero {
@@ -555,17 +556,33 @@
     }
 
     .product-thumbs {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-start;
+      align-content: flex-start;
     }
 
     .product-thumb {
+      padding: 0;
+      cursor: pointer;
       border-radius: 18px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(255, 255, 255, 0.03);
       aspect-ratio: 1 / 1;
+      width: 92px;
+      transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .product-thumb:hover {
+      transform: translateY(-1px);
+      border-color: rgba(15, 103, 216, 0.42);
+    }
+
+    .product-thumb.is-active {
+      border-color: rgba(15, 103, 216, 0.78);
+      box-shadow: 0 0 0 2px rgba(15, 103, 216, 0.18);
     }
 
     .product-thumb img {
@@ -1009,10 +1026,6 @@
       .hero-actions,
       .btn {
         width: 100%;
-      }
-
-      .product-thumbs {
-        grid-template-columns: 1fr;
       }
 
       .product-showcase {
@@ -1527,10 +1540,16 @@
 
       const thumbs = thumbImages
         .map(
-          (image) => `
-            <div class="product-thumb">
+          (image, index) => `
+            <button
+              class="product-thumb"
+              type="button"
+              data-src="${image.src}"
+              data-alt="${image.alt}"
+              aria-label="Ver foto ${index + 2} da ${product.name}"
+            >
               <img src="${image.src}" alt="${image.alt}">
-            </div>
+            </button>
           `
         )
         .join("");
@@ -1553,7 +1572,7 @@
         <div class="product-gallery">
           <div class="product-hero">
             <span class="product-badge">${product.badge}</span>
-            <img src="${heroImage.src}" alt="${heroImage.alt}">
+            <img class="product-hero-image" src="${heroImage.src}" alt="${heroImage.alt}">
           </div>
           <div class="product-thumbs">${thumbs}</div>
         </div>
@@ -1588,6 +1607,31 @@
       `;
 
       productShowcase.appendChild(article);
+
+      const hero = article.querySelector(".product-hero-image");
+      const thumbButtons = article.querySelectorAll(".product-thumb");
+
+      thumbButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const nextSrc = button.dataset.src;
+          const nextAlt = button.dataset.alt;
+          const currentSrc = hero.getAttribute("src");
+          const currentAlt = hero.getAttribute("alt");
+
+          hero.setAttribute("src", nextSrc);
+          hero.setAttribute("alt", nextAlt);
+
+          button.dataset.src = currentSrc;
+          button.dataset.alt = currentAlt;
+
+          const thumbImage = button.querySelector("img");
+          thumbImage.setAttribute("src", currentSrc);
+          thumbImage.setAttribute("alt", currentAlt);
+
+          thumbButtons.forEach((item) => item.classList.remove("is-active"));
+          button.classList.add("is-active");
+        });
+      });
     });
   </script>
 </body>
