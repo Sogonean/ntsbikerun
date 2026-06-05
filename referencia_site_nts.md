@@ -73,6 +73,7 @@ Exemplo:
 ## Campos obrigatórios para todos os anúncios
 
 - Nome da Bike
+- Categoria
 - Tamanho Aro
 - Tamanho Quadro
 - Condição
@@ -81,6 +82,14 @@ Exemplo:
 - Freios
 - Suspensão
 - Pneus
+
+## Categorias oficiais para anúncios
+
+- Mobilidade e Passeio
+- MTB Recreativa
+- Performance MTB
+- Speed e Estrada
+- Premium / Coleção
 
 ## Modelo base de conteúdo
 
@@ -95,6 +104,7 @@ Exemplo:
 ### Ficha técnica
 
 - Aro: `[Tamanho Aro]`
+- Categoria: `[Categoria do anúncio]`
 - Quadro: `[Tamanho Quadro]`
 - Condição: `[Nova ou Usada]`
 - Altura ideal: `[Altura ideal da pessoa]`
@@ -117,6 +127,7 @@ Absolute XT 29.15
 ### Dados confirmados
 
 - Nome da Bike: Absolute XT 29.15
+- Categoria: Performance MTB
 - Tamanho Aro: 29
 - Tamanho Quadro: 15
 - Condição: Usada
@@ -152,6 +163,7 @@ Badges do topo:
 - Deore XT 1x10v
 
 - Aro: 29
+- Categoria: Performance MTB
 - Quadro: 15
 - Condição: Usada
 - Altura ideal: 1,60 – 1,68 m
