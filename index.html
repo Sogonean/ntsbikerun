@@ -586,6 +586,14 @@
       gap: 10px;
     }
 
+    .product-topline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px 18px;
+    }
+
     .product-title {
       font-family: "Barlow Condensed", sans-serif;
       font-size: clamp(2.4rem, 5vw, 3.6rem);
@@ -593,6 +601,15 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       line-height: 0.95;
+    }
+
+    .product-price {
+      color: var(--blue-soft);
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
     }
 
     .product-copy {
@@ -641,6 +658,16 @@
       display: grid;
       gap: 14px;
       margin-top: 4px;
+    }
+
+    .product-details {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding-left: 20px;
+      color: var(--silver);
+      font-size: 0.98rem;
+      line-height: 1.45;
     }
 
     .product-note {
@@ -1284,6 +1311,7 @@
       {
         name: "Absolute XT 29.15",
         badge: "Performance MTB",
+        price: "",
         description: "Bike revisada, pronta para pedalar e com conjunto equilibrado para quem busca conforto, leveza e bom desempenho no uso urbano e em pedais mais rápidos.",
         note: "Fale no WhatsApp para confirmar disponibilidade, tirar dúvidas e combinar a compra.",
         message: "Olá, tenho interesse na bike Absolute XT 29.15 que vi no site. Ela ainda está disponível?",
@@ -1318,11 +1346,13 @@
           { label: "Freios", value: "Shimano Hidráulico" },
           { label: "Suspensão", value: "Ar" },
           { label: "Pneus", value: "Urbano/Gravel" }
-        ]
+        ],
+        details: []
       },
       {
         name: "Kode XT 29.17",
         badge: "Performance MTB",
+        price: "",
         description: "Bike revisada, pronta para pedalar e montada para quem procura desempenho em trilhas leves, pedaladas esportivas e uso cross country com bom controle.",
         note: "Fale no WhatsApp para confirmar disponibilidade, tirar dúvidas e combinar a compra.",
         message: "Olá, tenho interesse na bike Kode XT 29.17 que vi no site. Ela ainda está disponível?",
@@ -1361,6 +1391,62 @@
           { label: "Freios", value: "Shimano Deore Hidráulicos" },
           { label: "Suspensão", value: "Manittou a Ar" },
           { label: "Pneus", value: "Cross Country / XC" }
+        ],
+        details: []
+      },
+      {
+        name: "Cervelo S3 Carbon",
+        badge: "Speed e Estrada",
+        price: "R$ 9.900,00",
+        description: "Bike usada em carbono, pronta para treinos, ciclismo de estrada e pedaladas mais longas, com conjunto voltado para velocidade e bom rendimento no asfalto.",
+        note: "Fale no WhatsApp para confirmar disponibilidade, tirar dúvidas e combinar a compra.",
+        message: "Olá, tenho interesse na bike Cervelo S3 Carbon que vi no site. Ela ainda está disponível?",
+        highlights: [
+          "Speed e Estrada",
+          "Aro 700c",
+          "Quadro 52-54 cm"
+        ],
+        images: [
+          {
+            src: "img/anuncios/cervelo-s3-carbon/cervelo_foto5capa.jpeg",
+            alt: "Bike Cervelo S3 Carbon inteira em fundo escuro"
+          },
+          {
+            src: "img/anuncios/cervelo-s3-carbon/cervelo_foto4.jpeg",
+            alt: "Detalhe frontal da Cervelo S3 Carbon"
+          },
+          {
+            src: "img/anuncios/cervelo-s3-carbon/cervelo_foto1.jpeg",
+            alt: "Detalhe do câmbio traseiro da Cervelo S3 Carbon"
+          },
+          {
+            src: "img/anuncios/cervelo-s3-carbon/cervelo_foto2.jpeg",
+            alt: "Detalhe da transmissão da Cervelo S3 Carbon"
+          },
+          {
+            src: "img/anuncios/cervelo-s3-carbon/cervelo_foto3.jpeg",
+            alt: "Detalhe do quadro e canote da Cervelo S3 Carbon"
+          }
+        ],
+        specs: [
+          { label: "Nome da bike", value: "Cervelo S3 Carbon" },
+          { label: "Categoria", value: "Speed e Estrada" },
+          { label: "Tamanho aro", value: "700c" },
+          { label: "Tamanho quadro", value: "52-54 cm" },
+          { label: "Condição", value: "Usada" },
+          { label: "Altura ideal", value: "1,65 a 1,75 m" },
+          { label: "Ajuste fino", value: "Permite ajuste para outras alturas" },
+          { label: "Câmbio e transmissão", value: "Tiagra 4700 2x10v" },
+          { label: "Freios", value: "Freio ferradura (caliper)" },
+          { label: "Suspensão", value: "Não possui (garfo rígido carbono)" },
+          { label: "Pneus", value: "Speed 700c" }
+        ],
+        details: [
+          "Quadro em carbono",
+          "Movimento central BSA 68 mm",
+          "Canote aero específico do quadro",
+          "Ano estimado: 2010/2011",
+          "Indicada para treinos, ciclismo de estrada e longas distâncias"
         ]
       }
     ];
@@ -1399,6 +1485,18 @@
         )
         .join("");
 
+      const price = product.price
+        ? `<div class="product-price">${product.price}</div>`
+        : "";
+
+      const details = product.details && product.details.length
+        ? `
+          <ul class="product-details">
+            ${product.details.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        `
+        : "";
+
       const article = document.createElement("article");
       article.className = "product-showcase";
       article.innerHTML = `
@@ -1412,13 +1510,18 @@
 
         <div class="product-panel">
           <div class="product-header">
-            <h3 class="product-title">${product.name}</h3>
+            <div class="product-topline">
+              <h3 class="product-title">${product.name}</h3>
+              ${price}
+            </div>
             <p class="product-copy">${product.description}</p>
           </div>
 
           <div class="product-pills">${highlights}</div>
 
           <div class="product-specs">${specs}</div>
+
+          ${details}
 
           <div class="product-footer">
             <p class="product-note">${product.note}</p>
