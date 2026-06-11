@@ -73,6 +73,7 @@ Exemplo:
 ## Campos obrigatórios para todos os anúncios
 
 - Nome da Bike
+- Valor
 - Categoria
 - Tamanho Aro
 - Tamanho Quadro
@@ -100,6 +101,10 @@ Exemplo:
 ### Linha de apoio
 
 `Bike revisada, pronta para pedalar e com atendimento direto pelo WhatsApp.`
+
+### Valor
+
+`[Valor do anúncio]`
 
 ### Ficha técnica
 
