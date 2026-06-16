@@ -501,35 +501,194 @@
 
     .products-list {
       display: grid;
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
       margin-top: 24px;
+      align-items: start;
     }
 
     .product-showcase {
+      position: relative;
+      min-height: 332px;
+      border-radius: 24px;
+      outline: none;
+    }
+
+    .product-showcase.is-active {
+      z-index: 8;
+    }
+
+    .product-preview {
+      height: 100%;
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-      gap: 24px;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(14, 18, 24, 0.96), rgba(12, 20, 32, 0.94));
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .product-showcase:hover .product-preview {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 46px rgba(0, 0, 0, 0.24);
+      border-color: rgba(15, 103, 216, 0.28);
+    }
+
+    .product-preview-media {
+      overflow: hidden;
+      border-radius: 18px;
+      background: #eef2f8;
+      aspect-ratio: 1 / 1;
+    }
+
+    .product-preview-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-preview-copy {
+      display: grid;
+      gap: 6px;
+      color: var(--text);
+    }
+
+    .product-preview-title {
+      font-size: 1.38rem;
+      line-height: 1.05;
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+
+    .product-preview-price {
+      color: #0f67d8;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .product-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 12, 22, 0.42);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+      z-index: 30;
+    }
+
+    .product-modal-backdrop.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .product-popover {
+      display: none;
+    }
+
+    .product-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: min(560px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      box-sizing: border-box;
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      padding-top: 52px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 28px;
-      background:
-        linear-gradient(180deg, rgba(15, 103, 216, 0.12), rgba(255, 255, 255, 0.02)),
-        var(--bg-card);
+      background: linear-gradient(180deg, rgba(14, 18, 24, 0.98), rgba(12, 20, 32, 0.96));
+      color: var(--text);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.32);
+      opacity: 0;
+      pointer-events: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      isolation: isolate;
+      filter: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      z-index: 40;
+      transform: translate(-50%, calc(-50% + 10px)) scale(0.98);
+      transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .product-modal.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .product-modal {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(15, 103, 216, 0.35) transparent;
+    }
+
+    .product-modal::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .product-modal::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .product-modal::-webkit-scrollbar-thumb {
+      background: rgba(15, 103, 216, 0.26);
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    .product-modal::-webkit-scrollbar-thumb:hover {
+      background: rgba(15, 103, 216, 0.42);
+      background-clip: padding-box;
+    }
+
+    .product-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 2;
     }
 
     .product-gallery {
       display: grid;
-      gap: 14px;
+      gap: 10px;
       align-content: start;
     }
 
     .product-hero {
       position: relative;
-      border-radius: 22px;
+      border-radius: 20px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.03);
-      aspect-ratio: 4 / 3;
+      background: rgba(7, 10, 16, 0.92);
+      aspect-ratio: 1 / 1;
     }
 
     .product-hero img {
@@ -541,37 +700,35 @@
 
     .product-badge {
       position: absolute;
-      top: 16px;
-      left: 16px;
-      padding: 8px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      top: 12px;
+      left: 12px;
+      padding: 7px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 999px;
-      background: rgba(5, 6, 8, 0.84);
-      color: var(--blue-soft);
+      background: rgba(7, 10, 16, 0.82);
+      color: #0f67d8;
       font-family: "Barlow Condensed", sans-serif;
-      font-size: 0.98rem;
+      font-size: 0.92rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .product-thumbs {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      align-items: flex-start;
-      align-content: flex-start;
+      gap: 8px;
     }
 
     .product-thumb {
       padding: 0;
       cursor: pointer;
-      border-radius: 18px;
+      border-radius: 12px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(7, 10, 16, 0.92);
       aspect-ratio: 1 / 1;
-      width: 92px;
+      width: 54px;
       transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
     }
 
@@ -594,36 +751,36 @@
 
     .product-panel {
       display: grid;
-      align-content: start;
-      gap: 18px;
+      gap: 12px;
     }
 
     .product-header {
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
 
     .product-topline {
       display: flex;
       flex-wrap: wrap;
-      align-items: start;
+      align-items: baseline;
       justify-content: space-between;
-      gap: 12px 18px;
+      gap: 8px 16px;
     }
 
     .product-title {
       font-family: "Barlow Condensed", sans-serif;
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-size: 2rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      line-height: 0.95;
+      line-height: 0.98;
+      color: var(--text);
     }
 
     .product-price {
-      color: var(--blue-soft);
+      color: #0f67d8;
       font-family: "Barlow Condensed", sans-serif;
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: 2rem;
       font-weight: 800;
       letter-spacing: 0.03em;
       white-space: nowrap;
@@ -631,78 +788,66 @@
 
     .product-copy {
       color: var(--muted);
-      font-size: 1.08rem;
-      line-height: 1.55;
+      font-size: 0.96rem;
+      line-height: 1.45;
     }
 
     .product-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .product-specs {
       display: grid;
-      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
     }
 
     .product-spec {
-      padding: 14px 16px 12px;
+      padding: 10px 12px 9px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.03);
+      border-radius: 14px;
+      background: rgba(15, 103, 216, 0.1);
     }
 
     .product-spec-label {
       display: block;
-      margin-bottom: 6px;
-      color: var(--blue-soft);
+      margin-bottom: 4px;
+      color: #0f67d8;
       font-family: "Barlow Condensed", sans-serif;
-      font-size: 0.92rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .product-spec-value {
       color: var(--silver);
-      font-size: 1rem;
+      font-size: 0.92rem;
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
     .product-footer {
       display: grid;
-      gap: 14px;
-      margin-top: 4px;
-    }
-
-    .product-nav {
-      display: flex;
-      flex-wrap: wrap;
       gap: 10px;
-      margin-top: 4px;
-    }
-
-    .product-nav .btn {
-      min-height: 44px;
-      padding: 10px 18px;
     }
 
     .product-details {
       display: grid;
-      gap: 8px;
+      gap: 6px;
       margin: 0;
-      padding-left: 20px;
-      color: var(--silver);
-      font-size: 0.98rem;
-      line-height: 1.45;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.35;
     }
 
     .product-note {
       color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.45;
+      font-size: 0.88rem;
+      line-height: 1.35;
     }
 
     .service-item {
@@ -979,10 +1124,6 @@
         grid-template-columns: 1fr;
       }
 
-      .product-showcase {
-        grid-template-columns: 1fr;
-      }
-
       .service-packages {
         grid-template-columns: 1fr;
       }
@@ -1041,7 +1182,26 @@
       }
 
       .product-showcase {
-        padding: 16px;
+        min-height: auto;
+      }
+
+      .products-list {
+        grid-template-columns: 1fr;
+      }
+
+      .product-modal {
+        width: min(560px, calc(100vw - 20px));
+        max-height: calc(100vh - 20px);
+        padding: 12px;
+        padding-top: 48px;
+      }
+
+      .product-specs {
+        grid-template-columns: 1fr;
+      }
+
+      .product-thumb {
+        width: 58px;
       }
 
       .service-table-wrap {
@@ -1129,11 +1289,18 @@
       </div>
 
       <div class="services-cta">
+        <a class="btn btn-secondary" href="#topo">Voltar ao topo</a>
         <a class="btn btn-secondary" href="#servicos">Pular anúncios e ver serviços</a>
         <a class="btn btn-secondary" href="#contato">Ir para contato</a>
       </div>
 
       <div class="products-list" id="product-showcase" aria-live="polite"></div>
+
+      <div class="services-cta">
+        <a class="btn btn-secondary" href="#topo">Voltar ao topo</a>
+        <a class="btn btn-secondary" href="#servicos">Pular anúncios e ver serviços</a>
+        <a class="btn btn-secondary" href="#contato">Ir para contato</a>
+      </div>
     </section>
 
     <section class="section" id="servicos">
@@ -1665,6 +1832,52 @@
           { label: "Pneus", value: "Trilha leve" }
         ],
         details: []
+      },
+      {
+        featured: false,
+        name: "KSW 29.17 XTR 2.0 21v",
+        badge: "MTB Recreativa",
+        price: "R$ 690,00",
+        description: "Bike usada, pronta para pedalar e indicada para quem busca uma MTB recreativa para passeios, trilhas leves e uso esportivo com bom custo-benefício.",
+        note: "Fale no WhatsApp para confirmar disponibilidade, tirar dúvidas e combinar a compra.",
+        message: "Olá, tenho interesse na bike KSW 29.17 XTR 2.0 21v que vi no site. Ela ainda está disponível?",
+        highlights: [
+          "MTB Recreativa",
+          "Aro 29",
+          "Quadro 17"
+        ],
+        images: [
+          {
+            src: "img/anuncios/ksw-2917-xtr-20-21v/ksw1.jpeg",
+            alt: "Bike KSW 29.17 XTR 2.0 21v inteira em fundo escuro"
+          },
+          {
+            src: "img/anuncios/ksw-2917-xtr-20-21v/ksw4.jpeg",
+            alt: "Detalhe frontal da KSW 29.17 XTR 2.0 21v"
+          },
+          {
+            src: "img/anuncios/ksw-2917-xtr-20-21v/ksw2.jpeg",
+            alt: "Detalhe do câmbio traseiro da KSW 29.17 XTR 2.0 21v"
+          },
+          {
+            src: "img/anuncios/ksw-2917-xtr-20-21v/ksw3.jpeg",
+            alt: "Detalhe da transmissão da KSW 29.17 XTR 2.0 21v"
+          }
+        ],
+        specs: [
+          { label: "Nome da bike", value: "KSW 29.17 XTR 2.0 21v" },
+          { label: "Categoria", value: "MTB Recreativa" },
+          { label: "Tamanho aro", value: "29" },
+          { label: "Tamanho quadro", value: "17" },
+          { label: "Condição", value: "Usada" },
+          { label: "Altura ideal", value: "1,70 a 1,80" },
+          { label: "Ajuste fino", value: "Permite ajuste para outras alturas" },
+          { label: "Câmbio e transmissão", value: "3x7v" },
+          { label: "Freios", value: "Disco" },
+          { label: "Suspensão", value: "Suspensão com trava" },
+          { label: "Pneus", value: "Trilha leve" }
+        ],
+        details: []
       }
     ];
 
@@ -1690,9 +1903,31 @@
     const featuredProducts = products.filter((product) => product.featured);
     const regularProducts = products.filter((product) => !product.featured);
     const orderedProducts = [...featuredProducts, ...shuffleProducts(regularProducts)];
+    const modalBackdrop = document.createElement("div");
+    modalBackdrop.className = "product-modal-backdrop";
+    document.body.appendChild(modalBackdrop);
+    const productModal = document.createElement("div");
+    productModal.className = "product-modal";
+    document.body.appendChild(productModal);
 
-    orderedProducts.forEach((product) => {
+    const closeAllProducts = () => {
+      document.querySelectorAll(".product-showcase.is-active").forEach((item) => {
+        item.classList.remove("is-active");
+      });
+
+      modalBackdrop.classList.remove("is-visible");
+      productModal.classList.remove("is-visible");
+      productModal.innerHTML = "";
+    };
+
+    const renderProductModal = (product, previewImage) => {
       const [heroImage, ...thumbImages] = product.images;
+      const price = product.price
+        ? `<div class="product-price">${product.price}</div>`
+        : "";
+      const highlights = product.highlights
+        .map((item) => `<span class="mini-pill">${item}</span>`)
+        .join("");
       const specs = product.specs
         .map(
           (spec) => `
@@ -1703,11 +1938,13 @@
           `
         )
         .join("");
-
-      const highlights = product.highlights
-        .map((item) => `<span class="mini-pill">${item}</span>`)
-        .join("");
-
+      const details = product.details && product.details.length
+        ? `
+          <ul class="product-details">
+            ${product.details.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        `
+        : "";
       const thumbs = thumbImages
         .map(
           (image, index) => `
@@ -1724,21 +1961,8 @@
         )
         .join("");
 
-      const price = product.price
-        ? `<div class="product-price">${product.price}</div>`
-        : "";
-
-      const details = product.details && product.details.length
-        ? `
-          <ul class="product-details">
-            ${product.details.map((item) => `<li>${item}</li>`).join("")}
-          </ul>
-        `
-        : "";
-
-      const article = document.createElement("article");
-      article.className = "product-showcase";
-      article.innerHTML = `
+      productModal.innerHTML = `
+        <button class="product-close" type="button" aria-label="Fechar detalhes do anúncio">×</button>
         <div class="product-gallery">
           <div class="product-hero">
             <span class="product-badge">${product.badge}</span>
@@ -1772,22 +1996,19 @@
             >
               Tenho interesse na ${product.name}
             </a>
-            <div class="product-nav">
-              <a class="btn btn-secondary" href="#topo">Voltar ao topo</a>
-              <a class="btn btn-secondary" href="#servicos">Pular anúncios e ver serviços</a>
-              <a class="btn btn-secondary" href="#contato">Ir para contato</a>
-            </div>
           </div>
         </div>
       `;
 
-      productShowcase.appendChild(article);
+      const hero = productModal.querySelector(".product-hero-image");
+      const thumbButtons = productModal.querySelectorAll(".product-thumb");
+      const closeButton = productModal.querySelector(".product-close");
 
-      const hero = article.querySelector(".product-hero-image");
-      const thumbButtons = article.querySelectorAll(".product-thumb");
+      closeButton.addEventListener("click", closeAllProducts);
 
       thumbButtons.forEach((button) => {
-        button.addEventListener("click", () => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
           const nextSrc = button.dataset.src;
           const nextAlt = button.dataset.alt;
           const currentSrc = hero.getAttribute("src");
@@ -1795,6 +2016,8 @@
 
           hero.setAttribute("src", nextSrc);
           hero.setAttribute("alt", nextAlt);
+          previewImage.setAttribute("src", nextSrc);
+          previewImage.setAttribute("alt", nextAlt);
 
           button.dataset.src = currentSrc;
           button.dataset.alt = currentAlt;
@@ -1807,6 +2030,62 @@
           button.classList.add("is-active");
         });
       });
+
+      productModal.classList.add("is-visible");
+      modalBackdrop.classList.add("is-visible");
+    };
+
+    orderedProducts.forEach((product) => {
+      const [heroImage, ...thumbImages] = product.images;
+
+      const previewPrice = product.price
+        ? `<div class="product-preview-price">${product.price}</div>`
+        : "";
+
+      const article = document.createElement("article");
+      article.className = "product-showcase";
+      article.tabIndex = 0;
+      article.innerHTML = `
+        <div class="product-preview">
+          <div class="product-preview-media">
+            <img class="product-preview-image" src="${heroImage.src}" alt="${heroImage.alt}">
+          </div>
+          <div class="product-preview-copy">
+            <h3 class="product-preview-title">${product.name}</h3>
+            ${previewPrice}
+          </div>
+        </div>
+      `;
+
+      productShowcase.appendChild(article);
+
+      const preview = article.querySelector(".product-preview");
+      const previewImage = article.querySelector(".product-preview-image");
+
+      preview.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const isAlreadyOpen = article.classList.contains("is-active");
+        closeAllProducts();
+
+        if (!isAlreadyOpen) {
+          article.classList.add("is-active");
+          renderProductModal(product, previewImage);
+        }
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".product-showcase") && !event.target.closest(".product-modal")) {
+        closeAllProducts();
+      }
+    });
+
+    modalBackdrop.addEventListener("click", closeAllProducts);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeAllProducts();
+      }
     });
   </script>
 </body>
