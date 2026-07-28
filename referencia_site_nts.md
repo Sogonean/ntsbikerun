@@ -208,3 +208,32 @@ Quando houver mais anúncios:
 - Os demais anúncios devem aparecer em ordem aleatória a cada abertura da página
 - Para controlar isso no cadastro, cada bike pode ter um marcador de destaque
 - Se a bike estiver marcada como destaque, ela não entra na rotação aleatória
+
+## Regra para anúncios vendidos
+
+- Bikes vendidas podem continuar visíveis no site por até 60 dias
+- Ao marcar uma bike como vendida, sempre registrar a data exata da venda no cadastro do anúncio
+- A partir da data registrada, o anúncio permanece ativo por 60 dias e depois deve ser desativado automaticamente
+- Enquanto estiver dentro desse prazo, o anúncio vendido deve mostrar uma tarja `VENDIDA` em destaque
+- O anúncio vendido também deve mostrar uma frase curta aleatória, escolhida entre mensagens aprovadas para bikes já vendidas
+- Depois dos 60 dias, o anúncio não deve mais aparecer na vitrine do site
+
+### Frases aprovadas para anúncios vendidos
+
+- `Mais uma bike vendida`
+- `Essa já encontrou um novo dono`
+- `Novo dono, novas aventuras`
+- `Pronta para novos pedais`
+- `Mais uma saindo para rodar`
+- `Venda concluída com sucesso`
+- `Essa já saiu da garagem`
+- `Mais uma bike ganhou as ruas`
+- `Partiu para uma nova história`
+- `Destino: novos pedais`
+- `Essa já tem dono`
+- `Pedal garantido!`
+- `Já está de casa nova`
+- `Mais uma história sobre duas rodas`
+- `Preparada, revisada e vendida`
+- `Da NTS direto para o pedal`
+- `Mais uma bike pronta para rodar`

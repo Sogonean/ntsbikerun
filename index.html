@@ -538,6 +538,7 @@
     }
 
     .product-preview-media {
+      position: relative;
       overflow: hidden;
       border-radius: 18px;
       background: #eef2f8;
@@ -573,6 +574,47 @@
       font-size: 1.9rem;
       font-weight: 800;
       line-height: 1;
+    }
+
+    .product-preview.is-sold {
+      border-color: rgba(255, 107, 53, 0.35);
+    }
+
+    .product-preview.is-sold .product-preview-image,
+    .product-modal.is-sold .product-hero-image {
+      filter: saturate(0.82);
+    }
+
+    .product-sold-ribbon {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
+      padding: 8px 14px 7px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff6b35, #ff3d00);
+      color: #fff;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 24px rgba(255, 61, 0, 0.28);
+    }
+
+    .product-sold-copy {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 28px;
+      padding: 5px 10px;
+      border: 1px solid rgba(255, 107, 53, 0.24);
+      border-radius: 999px;
+      background: rgba(255, 107, 53, 0.12);
+      color: #ffb18f;
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
 
     .product-modal-backdrop {
@@ -832,6 +874,30 @@
     .product-footer {
       display: grid;
       gap: 10px;
+    }
+
+    .product-sold-status {
+      display: grid;
+      gap: 8px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 107, 53, 0.2);
+      border-radius: 16px;
+      background: rgba(255, 107, 53, 0.08);
+    }
+
+    .product-sold-title {
+      color: #ffd1bd;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .product-sold-note {
+      color: #ffc4a9;
+      font-size: 0.9rem;
+      line-height: 1.35;
     }
 
     .product-details {
@@ -1708,6 +1774,9 @@
           "Aro 29",
           "Quadro 21"
         ],
+        sold: {
+          since: "2026-07-28"
+        },
         images: [
           {
             src: "img/anuncios/deeper-2921-altus/1.jpeg",
@@ -1924,10 +1993,96 @@
     ];
 
     const productShowcase = document.getElementById("product-showcase");
+    const soldRetentionDays = 60;
+    const soldPhrases = [
+      "Mais uma bike vendida",
+      "Essa já encontrou um novo dono",
+      "Novo dono, novas aventuras",
+      "Pronta para novos pedais",
+      "Mais uma saindo para rodar",
+      "Venda concluída com sucesso",
+      "Essa já saiu da garagem",
+      "Mais uma bike ganhou as ruas",
+      "Partiu para uma nova história",
+      "Destino: novos pedais",
+      "Essa já tem dono",
+      "Pedal garantido!",
+      "Já está de casa nova",
+      "Mais uma história sobre duas rodas",
+      "Preparada, revisada e vendida",
+      "Da NTS direto para o pedal",
+      "Mais uma bike pronta para rodar"
+    ];
 
     const buildWhatsAppLink = (message) => {
       const text = encodeURIComponent(message);
       return `https://wa.me/${whatsappNumber}?text=${text}`;
+    };
+
+    const addDays = (date, days) => {
+      const nextDate = new Date(date);
+      nextDate.setUTCDate(nextDate.getUTCDate() + days);
+      return nextDate;
+    };
+
+    const parseIsoDate = (value) => {
+      const parsed = new Date(`${value}T00:00:00Z`);
+      return Number.isNaN(parsed.getTime()) ? null : parsed;
+    };
+
+    const formatDateBr = (value) => {
+      const date = typeof value === "string" ? parseIsoDate(value) : value;
+
+      if (!date) {
+        return "";
+      }
+
+      return new Intl.DateTimeFormat("pt-BR", {
+        timeZone: "UTC",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      }).format(date);
+    };
+
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    const getSoldMeta = (product) => {
+      if (!product.sold || !product.sold.since) {
+        return null;
+      }
+
+      const soldSince = parseIsoDate(product.sold.since);
+
+      if (!soldSince) {
+        return null;
+      }
+
+      const expiresAt = addDays(soldSince, soldRetentionDays);
+      const isActive = today <= expiresAt;
+      const phraseIndexBase = `${product.name}-${product.sold.since}`
+        .split("")
+        .reduce((total, char) => total + char.charCodeAt(0), 0);
+      const daySeed = Math.floor(today.getTime() / 86400000);
+      const phrase = soldPhrases[(phraseIndexBase + daySeed) % soldPhrases.length];
+
+      return {
+        soldSince,
+        expiresAt,
+        isActive,
+        phrase
+      };
+    };
+
+    const isProductVisible = (product) => {
+      const soldMeta = getSoldMeta(product);
+
+      if (!soldMeta) {
+        return true;
+      }
+
+      return soldMeta.isActive;
     };
 
     const shuffleProducts = (items) => {
@@ -1942,8 +2097,9 @@
     };
 
     // Anúncios em destaque ficam fixos no topo; o restante alterna a cada abertura.
-    const featuredProducts = products.filter((product) => product.featured);
-    const regularProducts = products.filter((product) => !product.featured);
+    const visibleProducts = products.filter((product) => isProductVisible(product));
+    const featuredProducts = visibleProducts.filter((product) => product.featured);
+    const regularProducts = visibleProducts.filter((product) => !product.featured);
     const orderedProducts = [...featuredProducts, ...shuffleProducts(regularProducts)];
     const modalBackdrop = document.createElement("div");
     modalBackdrop.className = "product-modal-backdrop";
@@ -1964,6 +2120,7 @@
 
     const renderProductModal = (product, previewImage) => {
       const [heroImage, ...thumbImages] = product.images;
+      const soldMeta = getSoldMeta(product);
       const price = product.price
         ? `<div class="product-price">${product.price}</div>`
         : "";
@@ -2002,11 +2159,37 @@
           `
         )
         .join("");
+      const soldRibbon = soldMeta ? `<span class="product-sold-ribbon">Vendida</span>` : "";
+      const soldStatus = soldMeta
+        ? `
+          <div class="product-sold-status">
+            <div class="product-sold-title">Vendida</div>
+            <div class="product-sold-copy">${soldMeta.phrase}</div>
+            <div class="product-sold-note">Venda registrada em ${formatDateBr(soldMeta.soldSince)}. Este anúncio permanece visível até ${formatDateBr(soldMeta.expiresAt)} e depois é desativado automaticamente.</div>
+          </div>
+        `
+        : "";
+      const footerNote = soldMeta
+        ? "Anúncio mantido por tempo limitado apenas para registro de bike já vendida."
+        : product.note;
+      const productAction = soldMeta
+        ? soldStatus
+        : `
+          <a
+            class="btn btn-product"
+            href="${buildWhatsAppLink(product.message)}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Tenho interesse na ${product.name}
+          </a>
+        `;
 
       productModal.innerHTML = `
         <button class="product-close" type="button" aria-label="Fechar detalhes do anúncio">×</button>
         <div class="product-gallery">
           <div class="product-hero">
+            ${soldRibbon}
             <span class="product-badge">${product.badge}</span>
             <img class="product-hero-image" src="${heroImage.src}" alt="${heroImage.alt}">
           </div>
@@ -2029,15 +2212,8 @@
           ${details}
 
           <div class="product-footer">
-            <p class="product-note">${product.note}</p>
-            <a
-              class="btn btn-product"
-              href="${buildWhatsAppLink(product.message)}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Tenho interesse na ${product.name}
-            </a>
+            <p class="product-note">${footerNote}</p>
+            ${productAction}
           </div>
         </div>
       `;
@@ -2073,28 +2249,35 @@
         });
       });
 
+      productModal.classList.toggle("is-sold", Boolean(soldMeta));
       productModal.classList.add("is-visible");
       modalBackdrop.classList.add("is-visible");
     };
 
     orderedProducts.forEach((product) => {
       const [heroImage, ...thumbImages] = product.images;
+      const soldMeta = getSoldMeta(product);
 
       const previewPrice = product.price
         ? `<div class="product-preview-price">${product.price}</div>`
         : "";
+      const soldRibbon = soldMeta ? `<span class="product-sold-ribbon">Vendida</span>` : "";
+      const soldCopy = soldMeta ? `<div class="product-sold-copy">${soldMeta.phrase}</div>` : "";
+      const previewClasses = soldMeta ? "product-preview is-sold" : "product-preview";
 
       const article = document.createElement("article");
       article.className = "product-showcase";
       article.tabIndex = 0;
       article.innerHTML = `
-        <div class="product-preview">
+        <div class="${previewClasses}">
           <div class="product-preview-media">
+            ${soldRibbon}
             <img class="product-preview-image" src="${heroImage.src}" alt="${heroImage.alt}">
           </div>
           <div class="product-preview-copy">
             <h3 class="product-preview-title">${product.name}</h3>
             ${previewPrice}
+            ${soldCopy}
           </div>
         </div>
       `;
